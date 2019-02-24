@@ -4,11 +4,11 @@
 import math
 import random
 
-
+# Function to calculate the Probability
 def Probability(rating1, rating2): 
   return 1.0 * 1.0 / (1 + 1.0 * math.pow(10, 1.0 * (rating1 - rating2) / 400)) 
   
-
+#Function to claculate the new player's rating
 def EloRating(Ra, Rb, K, Sa, Sb, name1, name2):
   
     # To calculate the Winning Probability of Player B 
@@ -17,14 +17,15 @@ def EloRating(Ra, Rb, K, Sa, Sb, name1, name2):
     # To calculate the Winning Probability of Player A 
     Pa = Probability(Rb, Ra)
 
-    P1=Sa/(Sa+Sb)
-    P2=Sb/(Sa+Sb)
+    # To calculate the Performance Multiplier
+    P1 = Sa / ( Sa + Sb )
+    P2 = Sb / ( Sa + Sb )
 
     oRa = Ra
     oRb = Rb
     
     # Case -1 When Player A wins 
-    # Updating the Elo Ratings 
+    # Updating the Player's Ratings 
     if (Sa>Sb) : 
         Ra = Ra + K * P1*(1 - Pa) 
         Rb = Rb + K * P2*(0 - Pb) 
@@ -36,7 +37,8 @@ def EloRating(Ra, Rb, K, Sa, Sb, name1, name2):
         Ra = Ra + K * P1*(0 - Pa) 
         Rb = Rb + K * P2*(1 - Pb) 
  
-
+    # Assigning Leagues to the players
+    # To player A
     if Ra<1200:
       league_a = 'Unranked'
     elif 1200<Ra<2400:
@@ -46,6 +48,7 @@ def EloRating(Ra, Rb, K, Sa, Sb, name1, name2):
     elif Ra>3500:
       league_a = 'Master'
 
+    #To Player B
     if Rb<1200:
       league_b = 'Unranked'
     elif 1200<Rb<2400:
@@ -62,13 +65,14 @@ def EloRating(Ra, Rb, K, Sa, Sb, name1, name2):
     Sa = str(Sa)
     Sb = str(Sb)
     print("Player\tScore\tOld Rating\tNew Rating\tNew League")
-    #print("%s\t%d\t%.2f\t%.2f\t%s"%(name1, Sa, round(oRa, 2), round(Ra, 2), league_a))
-    #print("%s\t%d\t%.2f\t%.2f\t%s"%(name2, Sb, round(oRb, 2), round(Rb, 2), league_b))
-    #print(name1+"\t"+str(Sa)+"\t"+str(round(oRa, 2))+"\t"+str(round(Ra, 2))+"\t"+league_a)
-    #print(name2+"\t"+str(Sb)+"\t"+str(round(oRb, 2))+"\t"+str(round(Rb, 2))+"\t"+league_b)
     print(name1+"\t"+Sa+"\t"+oRa+"         "+Ra+"         "+league_a)
     print(name2+"\t"+Sb+"\t"+oRb+"         "+Rb+"         "+league_b)
-
+    if Sa>Sb:
+      print("Winner: "+name1)
+    elif Sb>Sa:
+      print("Winner: "+name2)
+    elif Sa==Sb:
+      print("Draw")
 
 array=[] #Data-set storage
 
